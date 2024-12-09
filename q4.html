@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(to right, #ece9e6, #ffffff);
+            color: #2c3e50;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        table {
+            width: 90%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        caption {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        thead {
+            background: #3498db;
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(odd) {
+            background: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f4f4f4;
+        }
+
+        tbody tr:hover {
+            background: #dfe6e9;
+        }
+
+        th {
+            text-transform: uppercase;
+            font-size: 1em;
+        }
+
+        td {
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 0.8em;
+            }
+
+            caption {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <caption>My Weekly Schedule</caption>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10 to 12</td>
+                <td>MEARN</td>
+                <td><center>AI</center></td>
+                <td><center>MEARN</center></td>
+                <td><center>.Net</center></td>
+                <td><center>Library</center></td>
+            </tr>
+            <tr>
+                <td>1 to 3</td>
+                <td><center>.Net</center></td>
+                <td><center>MEARN</center></td>
+                <td><center>AI</center></td>
+                <td><center>QR</center></td>
+                <td><center>Python</center></td>
+            </tr>
+            <tr>
+                <td><center>3 to 5</center></td>
+                <td><center>QR</center></td>
+                <td><center>.Net</center></td>
+                <td><center>Python</center></td>
+                <td><center>MEARN</center></td>
+                <td><center>AI</center></td>
+            </tr>
+        </tbody>
+    </table>
+        
+</body>
+</html>
