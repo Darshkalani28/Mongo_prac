@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(120deg, #fdfbfb, #ebedee);
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #34495e;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 40px;
+        }
+
+        ol {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        ol li {
+            margin-left: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 10px;
+        }
+
+        ol li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #f9f9f9;
+        }
+
+        ol li:last-child {
+            border-bottom: none;
+        }
+
+        ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            list-style: disc;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #34495e;
+            overflow-x: auto;
+            border-radius: 8px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            ol li {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Mongo Database</h1>
+    <h2>Here is the answer of Assignment 1</h2>
+    <ol>
+        <li>
+            Find all movies where:
+            <ul>
+                <li> Runtime is greater than 150 minutes</li>
+                <li> Rating is higher than 8.5</li>
+                <li> Year is between 2000 and 2015 (inclusive)</li>
+                <li> Box office earnings were less than 500 million OR greater than 1 billion</li>
+            </ul>
+            <code>
+                a.db.movies.find({runtime:{$gt:150}},{title:true,_id:false})
+                <br>
+                b.db.movies.find({runtime:{$gt:150}},{title:true,_id:false})
+                <br>
+                c.db.movies.find({year:{$gt:2000,$lt:2015}},{title:true,_id:false})
+                <br>
+                d.db.movies.find({$or:[{boxOffice:{$lt:500}},{boxOffice:{$gt:1000}}]},{title:true,_id:false})
+            </code>
+        </li>
+        <li>
+            Find movies directed by Christopher Nolan that won an Oscar, made more than 700 million at box office, and are available on Netflix.
+            <br>
+            <br>
+            <code>
+                db.movies.find({$and:[{director:"Christopher Nolan"},{isOscarWinner:true},{boxOffice:{$gt:700}},{streamingOn:{$in:["Netflix"]}}]},{title:true,_id:false})
+            </code>        
+        </li>                                                                                                                                                                                                                                                                           
+        <li>
+            Find movies that have special features, where both behind-the-scenes content and deleted scenes are available.
+            <code>
+                db.movies.find({"specialFeatures.behindTheScenes":true,"specialFeatures.deletedScenes":true},{title:true,_id:false})
+            </code>
+        </li>
+        <li>
+            Find movies where either Carrie-Anne Moss or Morgan Freeman is in the cast, have language options available, and can be watched on at least 2 streaming platforms.
+            
+            <code>
+                db.movies.find({    cast: { $in: ["Carrie-Anne Moss", "Morgan Freeman"] },    languages: { $exists: true, $not: { $size: 0 } },    streamingOn: { $exists: true, $not: { $size: 1 } }},{title:true,_id:false})
+            </code>
+        </li>
+        <li>
+            <code>
+                db.movies.updateOne({title:"Inception"},{$push:{languages:"Chinese"}})
+            </code>
+        </li>
+        <li>
+            Add Michael Caine to the cast of all Christopher Nolan movies.
+            <code>
+                db.movies.updateMany({director:{$in:["Christopher Nolan"]}},{$push:{cast:"Michael Caine"}})
+            </code>
+        </li>
+        <li>
+            Add Disney+ as a streaming option for all movies longer than 140 minutes.
+            <code>
+                db.movies.updateMany({runtime:{$gt:140}},{$push:{streamingOn:"Disney+"}})
+            </code>
+        </li>
+        <li>
+            Find movies that have exactly 2 genres and have box office earnings listed, but don't have any special features.
+            <code>
+                db.movies.find({genre:{$size:2},boxOffice:{$exists:true},specialFeatures:{$exists:false}},{title:true,_id:false})
+            </code>
+        </li>
+        <li>
+            Remove all movies with rating less than 8.0.
+            <code>
+                db.movies.deleteMany({rating:{$lt:8}})
+            </code>
+        </li>
+        <li>
+            Remove Netflix from the streaming platforms of all movies released before 2000.
+            <code>
+                db.movies.updateMany({year:{$lt:2000}},{$pull:{streamingOne:"Netflix"}})
+            </code>
+        </li>
+        <li>
+            Find movies where box office earnings are more than 10 times the runtime.
+            <code>
+                db.movies.find({ $expr: { $gt: ["$boxOffice", { $multiply: ["$runtime", 10] }] } }, {title: true, _id: false});
+            </code>
+        </li>
+        <li>
+            Find all movies available on exactly the same streaming platforms as "The Matrix".
+            <code>
+                db.movies.find({streamingOn:{$all:["Netflix","Amazon Prime"],$size:2}},{title:true,_id:false})
+            </code>
+        </li>
+        <li>
+            Find movies that have both "Action" and "Sci-Fi" in their genres.
+            <code>
+                db.movies.find({genre:{$all:["Action","Sci-Fi"]}},{title:true,_id:false})
+            </code>
+        </li>
+        <li>
+            Find movies where "Action" is the first genre listed.
+            <code>
+                db.movies.find({ "genres.0": "Action" }, {title: true, _id: false});
+            </code>    
+        </li>
+        <li>
+            Find movies that have exactly 3 cast members.
+            <code>
+                db.movies.find({cast:{$size:3}})
+            </code>
+        </li>
+    </ol>
+</body>
+</html>

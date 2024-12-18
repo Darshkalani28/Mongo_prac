@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>assignment-2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(120deg, #fdfbfb, #ebedee);
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #34495e;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 40px;
+        }
+
+        ol {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        ol li {
+            margin-left: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 10px;
+        }
+
+        ol li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #f9f9f9;
+        }
+
+        ol li:last-child {
+            border-bottom: none;
+        }
+
+        ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            list-style: disc;
+        }
+
+        code {
+            display: block;
+            background: #f4f4f4;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #34495e;
+            overflow-x: auto;
+            border-radius: 8px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            ol li {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Mongo Database</h1>
+    <h2>Here is the answer of Assignment 2</h2>
+    <ol>
+        <li>
+            Insert a new product:
+            <code>
+                db.data.insertOne({
+                    "_id": 16,
+                    "name": "Omen 16",
+                    "brand": "HP",
+                    "category": "Electronics",
+                    "price": 1590,
+                    "stock": 100,
+                    "ratings": [4.7, 4.8, 4.6],
+                    "description": "The HP OMEN 16 is a powerful gaming laptop with cutting-edge processors, NVIDIA RTX graphics, a high-refresh-rate display, advanced cooling, and customizable features for ultimate performance.",
+                    "tags": ["laptop", "gaming", "electronics", "work"],
+                    "lastUpdated": ISODate("2024-03-30")
+                });
+            </code>
+        </li>
+        <li>
+            Find all products with a price less than $100:
+            <code>
+                db.data.find({price: {$lt: 100}}, {name: true, brand: true});
+            </code>
+        </li>
+        <li>
+            Update the stock quantity of "Wireless Headphones" to 40:
+            <code>
+                db.data.updateOne({name: "Wireless Headphones"}, {$set: {stock: 40}});
+            </code>
+        </li>
+        <li>
+            Delete all products from the "Gaming" category:
+            <code>
+                db.data.deleteMany({category: "Gaming"});
+            </code>
+        </li>
+        <li>
+            Find all products and sort them by price in descending order:
+            <code>
+                db.data.find().sort({price: -1});
+            </code>
+        </li>
+        <li>
+            Find products with stock between 50 and 100 units:
+            <code>
+                db.data.find({stock: {$gte: 50, $lte: 100}});
+            </code>
+        </li>
+        <li>
+            Find products that have either "wireless" or "bluetooth" in their tags:
+            <code>
+                db.data.find({tags: {$in: ["wireless", "bluetooth"]}});
+            </code>
+        </li>
+        <li>
+            Find products where the average rating is greater than 4.5:
+            <code>
+                db.data.find({$expr: {$gt: [{$avg: "$ratings"}, 4.5]}});
+            </code>
+        </li>
+        <li>
+            Find products that were last updated after February 1st, 2024:
+            <code>
+                db.data.find({lastUpdated: {$gt: ISODate("2024-02-01")}});
+            </code>
+        </li>
+        <li>
+            Find products with exactly 3 ratings:
+            <code>
+                db.data.find({ratings: {$size: 3}});
+            </code>
+        </li>
+    </ol>
+</body>
+</html>
